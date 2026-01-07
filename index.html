@@ -3,142 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCSE NEA Deadline Countdown</title>
+    <title>GCSE NEA DEADLINE 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-            --accent-color: #38bdf8;
-            --deadline-color: #ef4444;
+            --lime-bright: #adff2f;
+            --lime-bg: #d9f99d;
+            --deep-green: #1a2e05;
+            --glass: rgba(255, 255, 255, 0.4);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: var(--lime-bg);
+            /* Rich Mesh Gradient */
+            background-image: 
+                radial-gradient(at 10% 10%, hsla(82, 80%, 75%, 1) 0, transparent 50%), 
+                radial-gradient(at 90% 10%, hsla(150, 70%, 70%, 1) 0, transparent 50%), 
+                radial-gradient(at 50% 90%, hsla(75, 90%, 70%, 1) 0, transparent 50%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--deep-green);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
+        }
+
+        .container {
             text-align: center;
+            padding: 2rem;
+            max-width: 1000px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: -1px;
+            font-weight: 800;
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
         }
 
-        p.deadline-info {
+        .deadline-subtext {
+            font-weight: 600;
+            opacity: 0.6;
+            margin: 1.5rem 0 3.5rem 0;
             font-size: 1.2rem;
-            color: var(--accent-color);
-            margin-bottom: 2rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
         }
 
         #countdown {
             display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
+            gap: 1.5rem;
             justify-content: center;
         }
 
-        .time-segment {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            min-width: 120px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .time-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 40px;
+            padding: 2.5rem 2rem;
+            min-width: 130px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .time-card:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.6);
         }
 
         .number {
             display: block;
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: var(--text-color);
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            font-variant-numeric: tabular-nums;
         }
 
         .label {
+            font-size: 0.85rem;
+            font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            color: #94a3b8;
+            letter-spacing: 0.15em;
+            opacity: 0.5;
         }
 
-        .footer {
-            margin-top: 3rem;
-            font-size: 0.9rem;
-            opacity: 0.7;
+        /* Impactful Quote Styling */
+        .quote-container {
+            margin-top: 5rem;
+            position: relative;
+            display: inline-block;
         }
 
-        @media (max-width: 600px) {
-            .time-segment {
-                min-width: 80px;
-                padding: 15px;
+        .quote-text {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 800;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+            padding: 0 10px;
+        }
+
+        .quote-highlight {
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: var(--lime-bright);
+            z-index: -1;
+            opacity: 0.8;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 700px) {
+            #countdown {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
             }
-            .number {
-                font-size: 2rem;
-            }
+            .time-card { min-width: auto; padding: 1.5rem; border-radius: 24px; }
+            .quote-container { margin-top: 3rem; }
         }
     </style>
 </head>
 <body>
 
-    <h1>GCSE NEA Final Submission</h1>
-    <p class="deadline-info">Deadline: Wednesday, 4 March 2026 at 17:00</p>
+    <div class="container">
+        <h1>GCSE NEA FINAL<br>SUBMISSION DEADLINE</h1>
+        <div class="deadline-subtext">Wednesday 4 March 2026 • 17:00</div>
 
-    <div id="countdown">
-        <div class="time-segment">
-            <span class="number" id="days">00</span>
-            <span class="label">Days</span>
+        <div id="countdown">
+            <div class="time-card">
+                <span class="number" id="days">00</span>
+                <span class="label">Days</span>
+            </div>
+            <div class="time-card">
+                <span class="number" id="hours">00</span>
+                <span class="label">Hours</span>
+            </div>
+            <div class="time-card">
+                <span class="number" id="mins">00</span>
+                <span class="label">Mins</span>
+            </div>
+            <div class="time-card">
+                <span class="number" id="secs">00</span>
+                <span class="label">Secs</span>
+            </div>
         </div>
-        <div class="time-segment">
-            <span class="number" id="hours">00</span>
-            <span class="label">Hours</span>
-        </div>
-        <div class="time-segment">
-            <span class="number" id="minutes">00</span>
-            <span class="label">Minutes</span>
-        </div>
-        <div class="time-segment">
-            <span class="number" id="seconds">00</span>
-            <span class="label">Seconds</span>
-        </div>
-    </div>
 
-    <div class="footer">
-        Keep pushing—you've got this!
+        <div class="quote-container">
+            <span class="quote-text">CHASE EXCELLENCE. MAKE EVERY SECOND COUNT.</span>
+            <div class="quote-highlight"></div>
+        </div>
     </div>
 
     <script>
-        // Set the deadline date: March 4, 2026, 17:00:00
-        const countDownDate = new Date("Mar 4, 2026 17:00:00").getTime();
+        // Target: March 4, 2026, 17:00:00
+        const targetDate = new Date("March 4, 2026 17:00:00").getTime();
 
-        const x = setInterval(function() {
+        function updateCountdown() {
             const now = new Date().getTime();
-            const distance = countDownDate - now;
+            const distance = targetDate - now;
 
-            // Calculations for days, hours, minutes and seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Output the results
-            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("mins").innerText = m.toString().padStart(2, '0');
+            document.getElementById("secs").innerText = s.toString().padStart(2, '0');
 
-            // If the count down is over, display text
             if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("countdown").innerHTML = "<h2 style='color: #ef4444;'>SUBMISSION CLOSED</h2>";
+                document.querySelector(".container").innerHTML = "<h1>SUBMISSION CLOSED</h1>";
             }
-        }, 1000);
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
 </body>
 </html>
