@@ -15,6 +15,7 @@
             --glass: rgba(255, 255, 255, 0.4);
             --glass-darker: rgba(255, 255, 255, 0.2);
             --accent-border: rgba(255, 255, 255, 0.6);
+            --urgency-red: #ff3b3b;
         }
 
         body {
@@ -85,6 +86,29 @@
             padding: 1.5rem;
             min-width: 110px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease;
+        }
+
+        /* NEW: Red Pulsing Box Style */
+        #days-left-card {
+            border: 3px solid var(--urgency-red);
+            animation: urgencyPulse 2s infinite;
+            background: white;
+        }
+
+        @keyframes urgencyPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 59, 59, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 20px 10px rgba(255, 59, 59, 0.2);
+                transform: scale(1.02);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 59, 59, 0);
+                transform: scale(1);
+            }
         }
 
         .number {
@@ -224,7 +248,7 @@
 
         <div class="section-label">TIME REMAINING</div>
         <div class="counter-grid">
-            <div class="card" style="background: white;">
+            <div class="card" id="days-left-card">
                 <span class="number" id="r-days">00</span>
                 <span class="label">Days Left</span>
             </div>
