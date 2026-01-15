@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCSE NEA PROGRESS TRACKER</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#d9f99d">
+    
+    <title>GCSE NEA DASHBOARD</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
@@ -15,7 +18,7 @@
             --glass: rgba(255, 255, 255, 0.4);
             --accent-border: rgba(255, 255, 255, 0.6);
             --urgency-red: #ff3b3b;
-            --pulse-duration: 2s; /* Default pulse speed */
+            --pulse-duration: 2s;
         }
 
         body {
@@ -79,7 +82,6 @@
             max-width: 140px;
         }
 
-        /* The Pulse Container */
         #urgency-zone {
             padding: 15px;
             border-radius: 35px;
@@ -178,6 +180,16 @@
             opacity: 0.8;
         }
 
+        #wake-lock-status {
+            position: fixed;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            opacity: 0.4;
+            letter-spacing: 1px;
+        }
+
         @media (max-width: 700px) {
             .info-box { grid-template-columns: 1fr; gap: 1rem; }
             .counter-grid { display: grid; grid-template-columns: 1fr 1fr; }
@@ -192,7 +204,7 @@
         <h1>GCSE NEA FINAL SUBMISSION</h1>
 
         <div>
-            <div class="section-label">JOURNEY SINCE JUNE 2025</div>
+            <div class="section-label">THE JOURNEY SO FAR</div>
             <div class="counter-grid">
                 <div class="card"><span class="number" id="e-days">0</span><span class="label">Days In</span></div>
                 <div class="card"><span class="number" id="e-hours">00</span><span class="label">Hours</span></div>
@@ -215,7 +227,7 @@
 
         <div class="info-box">
             <div>
-                <div class="badge">Support Available</div>
+                <div class="badge">Study Support</div>
                 <div class="info-header">Study Sessions</div>
                 <ul class="info-dates">
                     <li><span>24 January</span> <span>09:30 – 11:00</span></li>
@@ -226,8 +238,8 @@
             </div>
             <div style="border-left: 1px solid rgba(255,255,255,0.2); padding-left: 1.5rem;">
                 <div class="badge">Requirements</div>
-                <p style="font-size: 0.9rem; margin-bottom: 10px;"><strong>Dress:</strong> Home clothes (no shorts).</p>
-                <p style="font-size: 0.9rem;">Email <a href="mailto:mrwebb@school.com" class="email-link">Mr Webb</a> to attend.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 8px;"><strong>Dress:</strong> Home clothes (no shorts).</p>
+                <p style="font-size: 0.85rem;">Email <a href="mailto:mrwebb@school.com" class="email-link">Mr Webb</a> to attend.</p>
             </div>
         </div>
 
@@ -237,9 +249,33 @@
         </div>
     </div>
 
+    <div id="wake-lock-status">Wake Lock: Inactive</div>
+
     <script>
         const start = new Date("June 2, 2025 09:00:00").getTime();
         const end = new Date("March 4, 2026 17:00:00").getTime();
+
+        // Chromebook Always-On Logic
+        let wakeLock = null;
+
+        const requestWakeLock = async () => {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    document.getElementById('wake-lock-status').innerText = "Wake Lock: Enabled";
+                }
+            } catch (err) {
+                document.getElementById('wake-lock-status').innerText = "Wake Lock: System Denied";
+            }
+        };
+
+        document.addEventListener('visibilitychange', async () => {
+            if (wakeLock !== null && document.visibilityState === 'visible') {
+                requestWakeLock();
+            }
+        });
+
+        requestWakeLock();
 
         function update() {
             const now = new Date().getTime();
@@ -261,13 +297,12 @@
                 document.getElementById("r-mins").innerText = Math.floor((rDiff % 3600000) / 60000).toString().padStart(2,'0');
                 document.getElementById("r-secs").innerText = Math.floor((rDiff % 60000) / 1000).toString().padStart(2,'0');
 
-                // Dynamic Pulse Logic
                 let speed = "2s";
                 if (daysLeft < 7) {
-                    speed = "0.6s"; // Panic speed
+                    speed = "0.5s";
                     document.getElementById("pulse-status").innerText = "⚠️ CRITICAL TIMEFRAME ⚠️";
                 } else if (daysLeft < 30) {
-                    speed = "1.2s"; // Warning speed
+                    speed = "1.2s";
                     document.getElementById("pulse-status").innerText = "THE FINAL STRETCH";
                 }
                 
