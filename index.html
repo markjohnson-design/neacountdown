@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FINAL WARNING: GCSE NEA</title>
+    <title>GCSE NEA Progress Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --lime: #adff2f;
-            --deep-black: #000000;
-            --glass: rgba(0, 0, 0, 0.05);
+            --brand-lime: #99ff00;
+            --soft-lime: #f4ffe5;
+            --deep-slate: #1e293b;
+            --text-main: #0f172a;
+            --accent-gray: #64748b;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--lime);
-            /* Starker gradient for more "intensity" */
-            background-image: radial-gradient(circle at center, #adff2f 0%, #82c91e 100%);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: var(--deep-black);
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--soft-lime);
+            color: var(--text-main);
             height: 100vh;
             display: flex;
             align-items: center;
@@ -31,234 +28,226 @@
             overflow: hidden;
         }
 
-        .main-container {
+        .dashboard {
             width: 90%;
-            max-width: 1200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            max-width: 1000px;
             height: 90vh;
-        }
-
-        /* Top Bar: Title and Journey */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        h1 {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(1.2rem, 3vh, 2rem);
-            line-height: 1;
-            margin: 0;
-            text-transform: uppercase;
-            text-align: left;
-        }
-
-        .journey-pill {
-            background: var(--deep-black);
-            color: var(--lime);
-            padding: 10px 20px;
-            border-radius: 100px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* THE HERO: COUNTDOWN */
-        .countdown-hero {
-            text-align: center;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .urgency-label {
-            font-weight: 800;
-            letter-spacing: 0.5em;
-            text-transform: uppercase;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
-
-        .timer-display {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
             gap: 20px;
         }
 
-        .time-block {
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .journey-tag {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-gray);
+            background: white;
+            padding: 6px 14px;
+            border-radius: 100px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Main Focus Area */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .countdown-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gray);
+            margin-bottom: 20px;
+        }
+
+        .timer-grid {
+            display: flex;
+            gap: 15px;
+        }
+
+        .time-unit {
+            flex: 1;
+            text-align: center;
+        }
+
+        .num {
+            display: block;
+            font-size: clamp(2.5rem, 8vh, 4.5rem);
+            font-weight: 800;
+            line-height: 1;
+            color: var(--text-main);
+        }
+
+        .label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--accent-gray);
+            margin-top: 5px;
+        }
+
+        /* Study Sessions Column */
+        .study-sessions {
+            background: var(--deep-slate);
+            color: white;
+            border-radius: 24px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
         }
 
-        .num {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(4rem, 20vh, 12rem);
-            line-height: 0.8;
-            letter-spacing: -5px;
-        }
-
-        .sub {
-            font-weight: 800;
+        .study-sessions h2 {
+            font-size: 1.1rem;
+            color: var(--brand-lime);
+            margin-bottom: 15px;
             text-transform: uppercase;
-            font-size: clamp(0.7rem, 2vh, 1rem);
-            margin-top: 10px;
         }
 
-        /* STUDY SESSIONS: Sleek Bottom Box */
-        .study-hub {
-            background: var(--deep-black);
-            color: white;
-            border-radius: 30px;
-            padding: 20px 40px;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            align-items: center;
-            gap: 40px;
+        .session-list {
+            list-style: none;
+            flex-grow: 1;
         }
 
-        .study-title {
-            color: var(--lime);
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .date-row {
+        .session-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
         }
 
-        .date-tag {
-            border: 1px solid rgba(173, 255, 47, 0.3);
+        .requirements-box {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 15px;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+        }
+
+        .impact-quote {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--deep-slate);
+            background: var(--brand-lime);
+            padding: 10px 30px;
+            display: inline-block;
+            transform: skewX(-10deg);
+        }
+
+        .email-btn {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--brand-lime);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border: 1px solid var(--brand-lime);
             padding: 5px 12px;
             border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 800;
         }
 
-        .requirements-text {
-            font-size: 0.85rem;
-            border-left: 1px solid rgba(255,255,255,0.2);
-            padding-left: 20px;
-        }
-
-        .quote-footer {
-            margin-top: 2vh;
-            font-weight: 800;
-            font-style: italic;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-        }
-
-        /* Small flashing dot for "Live" effect */
-        .live-dot {
-            height: 10px;
-            width: 10px;
-            background-color: red;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 5px;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } }
-
-        @media (max-width: 800px) {
-            .study-hub { grid-template-columns: 1fr; padding: 20px; }
-            .timer-display { gap: 10px; }
-            .num { font-size: 15vw; }
+        @media (max-width: 850px) {
+            .main-content { grid-template-columns: 1fr; overflow-y: auto; }
+            body { overflow-y: auto; height: auto; padding: 20px; }
+            .dashboard { height: auto; }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        
-        <div class="top-bar">
-            <h1>GCSE NEA FINAL<br>SUBMISSION DEADLINE</h1>
-            <div class="journey-pill">
-                <span class="live-dot"></span>
-                <span id="journey-days">0</span> Days Since Start
+    <div class="dashboard">
+        <header>
+            <h1>GCSE NEA FINAL SUBMISSION DEADLINE</h1>
+            <div class="journey-tag">
+                JOURNEY PROGRESS: <span id="e-days">0</span> DAYS
             </div>
-        </div>
+        </header>
 
-        <div class="countdown-hero">
-            <div class="urgency-label">Time Remaining Until Final Cut-Off</div>
-            <div class="timer-display">
-                <div class="time-block"><span class="num" id="r-days">00</span><span class="sub">Days</span></div>
-                <div class="time-block"><span class="num" id="r-hours">00</span><span class="sub">Hours</span></div>
-                <div class="time-block"><span class="num" id="r-mins">00</span><span class="sub">Mins</span></div>
-                <div class="time-block"><span class="num" id="r-secs" style="color: #4b8b00;">00</span><span class="sub">Secs</span></div>
-            </div>
-        </div>
-
-        <div>
-            <div class="study-hub">
-                <div>
-                    <div class="study-title">Mandatory Study Support (09:30 – 11:00)</div>
-                    <div class="date-row">
-                        <div class="date-tag">24 JAN</div>
-                        <div class="date-tag">31 JAN</div>
-                        <div class="date-tag">21 FEB</div>
-                        <div class="date-tag">28 FEB</div>
-                    </div>
+        <main class="main-content">
+            <section class="card">
+                <div class="countdown-title">Final Countdown to 4 March 2026 • 17:00</div>
+                <div class="timer-grid">
+                    <div class="time-unit"><span class="num" id="r-days">0</span><span class="label">Days</span></div>
+                    <div class="time-unit"><span class="num" id="r-hours">00</span><span class="label">Hours</span></div>
+                    <div class="time-unit"><span class="num" id="r-mins">00</span><span class="label">Mins</span></div>
+                    <div class="time-unit"><span class="num" id="r-secs">00</span><span class="label">Secs</span></div>
                 </div>
-                <div class="requirements-text">
-                    <strong>Home clothes</strong> (no shorts).<br>
-                    Email <strong>Mr Webb</strong> to secure your place.
-                </div>
-            </div>
-            
-            <div class="quote-footer">
-                "CHASE EXCELLENCE. MAKE EVERY SECOND COUNT."
-            </div>
-        </div>
+            </section>
 
+            <aside class="study-sessions">
+                <h2>Study Sessions</h2>
+                <div style="font-size: 0.75rem; opacity: 0.8; margin-bottom: 10px;">09:30 AM – 11:00 AM</div>
+                <ul class="session-list">
+                    <li class="session-item"><span>24 January</span> <strong>Sat</strong></li>
+                    <li class="session-item"><span>31 January</span> <strong>Sat</strong></li>
+                    <li class="session-item"><span>21 February</span> <strong>Sat</strong></li>
+                    <li class="session-item"><span>28 February</span> <strong>Sat</strong></li>
+                </ul>
+                <div class="requirements-box">
+                    <strong>Dress Code:</strong> Home clothes (no shorts).<br>
+                    <strong>Action:</strong> Contact Mr Webb to attend.
+                    <br>
+                    <a href="mailto:mrwebb@school.uk" class="email-btn">Email Mr Webb</a>
+                </div>
+            </aside>
+        </main>
+
+        <footer>
+            <div class="impact-quote">CHASE EXCELLENCE. MAKE EVERY SECOND COUNT.</div>
+        </footer>
     </div>
 
     <script>
-        const start = new Date("June 2, 2025 09:00:00").getTime();
-        const end = new Date("March 4, 2026 17:00:00").getTime();
+        const startDate = new Date("June 2, 2025 09:00:00").getTime();
+        const targetDate = new Date("March 4, 2026 17:00:00").getTime();
 
         function update() {
             const now = new Date().getTime();
 
-            // Journey Counter
-            const elapsed = now - start;
-            document.getElementById("journey-days").innerText = Math.floor(elapsed / 86400000);
+            // Elapsed
+            const elapsed = now - startDate;
+            document.getElementById("e-days").innerText = Math.floor(elapsed / 86400000);
 
-            // Deadline Counter
-            const remaining = end - now;
+            // Remaining
+            const remaining = targetDate - now;
             if (remaining > 0) {
-                const d = Math.floor(remaining / 86400000);
-                const h = Math.floor((remaining % 86400000) / 3600000);
-                const m = Math.floor((remaining % 3600000) / 60000);
-                const s = Math.floor((remaining % 60000) / 1000);
-
-                document.getElementById("r-days").innerText = d.toString().padStart(2, '0');
-                document.getElementById("r-hours").innerText = h.toString().padStart(2, '0');
-                document.getElementById("r-mins").innerText = m.toString().padStart(2, '0');
-                document.getElementById("r-secs").innerText = s.toString().padStart(2, '0');
-                
-                // Panic Mode: If less than 30 days, make seconds pulse red
-                if (d < 30) {
-                    document.getElementById("r-secs").style.color = "red";
-                }
-            } else {
-                document.querySelector(".countdown-hero").innerHTML = "<span class='num'>CLOSED</span>";
+                document.getElementById("r-days").innerText = Math.floor(remaining / 86400000);
+                document.getElementById("r-hours").innerText = Math.floor((remaining % 86400000) / 3600000).toString().padStart(2, '0');
+                document.getElementById("r-mins").innerText = Math.floor((remaining % 3600000) / 60000).toString().padStart(2, '0');
+                document.getElementById("r-secs").innerText = Math.floor((remaining % 60000) / 1000).toString().padStart(2, '0');
             }
         }
 
