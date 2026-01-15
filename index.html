@@ -3,179 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCSE NEA DEADLINE 2026</title>
+    <title>GCSE NEA DASHBOARD</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --lime-bright: #adff2f;
             --lime-bg: #d9f99d;
             --deep-green: #1a2e05;
-            --glass: rgba(255, 255, 255, 0.4);
-            --glass-darker: rgba(255, 255, 255, 0.2);
-            --accent-border: rgba(255, 255, 255, 0.6);
+            --glass: rgba(255, 255, 255, 0.45);
         }
+
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
-            padding: 60px 20px;
-            background-color: var(--lime-bg);
+            padding: 0;
+            background: var(--lime-bg);
             background-image: 
                 radial-gradient(at 0% 0%, hsla(82, 80%, 75%, 1) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(150, 70%, 70%, 1) 0, transparent 50%), 
-                radial-gradient(at 50% 100%, hsla(75, 90%, 70%, 1) 0, transparent 50%);
+                radial-gradient(at 100% 0%, hsla(150, 70%, 70%, 1) 0, transparent 50%);
             font-family: 'Plus Jakarta Sans', sans-serif;
             color: var(--deep-green);
+            height: 100vh;
             display: flex;
+            align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            overflow: hidden; /* Prevents scrolling */
         }
 
-        .container {
+        .dashboard {
+            width: 95%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5vh; /* Responsive vertical spacing */
             text-align: center;
-            max-width: 1000px;
-            width: 100%;
         }
 
         h1 {
             font-weight: 800;
-            font-size: clamp(2rem, 6vw, 4rem);
+            font-size: clamp(1.5rem, 4.5vh, 3rem);
+            text-transform: uppercase;
             margin: 0;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
+            line-height: 1;
         }
 
-        .section-label {
+        .counters-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .section-box {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 1.5vh 1rem;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .section-title {
+            font-size: 0.7rem;
             font-weight: 800;
-            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.3em;
-            margin: 3.5rem 0 1.5rem 0;
+            letter-spacing: 0.2em;
+            margin-bottom: 1vh;
             opacity: 0.7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
         }
 
-        .section-label::before, .section-label::after {
-            content: "";
-            height: 1px;
-            width: 40px;
-            background: var(--deep-green);
-            opacity: 0.3;
-        }
-
-        /* Counters */
         .counter-grid {
             display: flex;
-            gap: 1.2rem;
             justify-content: center;
-            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--accent-border);
-            border-radius: 32px;
-            padding: 1.5rem;
-            min-width: 110px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        .unit {
+            display: flex;
+            flex-direction: column;
+            min-width: 70px;
         }
 
         .number {
-            display: block;
-            font-size: clamp(2rem, 5vw, 4rem);
+            font-size: clamp(1.8rem, 5vh, 3rem);
             font-weight: 800;
             line-height: 1;
-            font-variant-numeric: tabular-nums;
         }
 
         .label {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
-        /* Study Session Box */
-        .info-box {
-            margin-top: 4rem;
+        /* Study Session Area - Horizontal Layout */
+        .study-box {
             background: var(--deep-green);
             color: white;
-            border-radius: 40px;
-            padding: 3rem 2rem;
-            text-align: left;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-        }
-
-        .info-header {
-            font-weight: 800;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            color: var(--lime-bright);
-        }
-
-        .info-dates {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .info-dates li {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 8px;
+            border-radius: 24px;
+            padding: 2vh 2rem;
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 8px;
+            text-align: left;
         }
 
-        .info-details {
-            border-left: 1px solid rgba(255,255,255,0.2);
-            padding-left: 2rem;
-        }
-
-        .badge {
-            background: var(--lime-bright);
-            color: var(--deep-green);
-            padding: 4px 12px;
-            border-radius: 100px;
-            font-weight: 800;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        .email-link {
+        .study-title {
             color: var(--lime-bright);
             font-weight: 800;
-            text-decoration: none;
-            border-bottom: 2px solid var(--lime-bright);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
         }
 
-        /* Footer Quote */
+        .dates-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .date-item {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .requirements {
+            font-size: 0.8rem;
+            max-width: 250px;
+            border-left: 1px solid rgba(255,255,255,0.2);
+            padding-left: 1.5rem;
+        }
+
         .quote-container {
-            margin-top: 5rem;
-            padding-bottom: 4rem;
+            margin-top: 1vh;
         }
 
         .quote-text {
-            font-size: clamp(1.1rem, 3vw, 1.8rem);
+            font-size: clamp(1rem, 2.5vh, 1.5rem);
             font-weight: 800;
             font-style: italic;
             position: relative;
+            display: inline-block;
         }
 
         .quote-highlight {
@@ -183,121 +157,97 @@
             bottom: 2px;
             left: 0;
             width: 100%;
-            height: 12px;
+            height: 8px;
             background: var(--lime-bright);
             z-index: -1;
-            opacity: 0.8;
-            border-radius: 4px;
+            opacity: 0.6;
         }
 
-        @media (max-width: 800px) {
-            .info-box { grid-template-columns: 1fr; padding: 2rem; }
-            .info-details { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem; }
-            .counter-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        @media (max-width: 850px) {
+            .counters-container, .study-box { grid-template-columns: 1fr; flex-direction: column; }
+            .study-box { text-align: center; gap: 10px; }
+            .dates-grid { grid-template-columns: 1fr 1fr; }
+            .requirements { border-left: none; padding-left: 0; max-width: 100%; }
+            body { overflow-y: auto; height: auto; padding: 20px 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>GCSE NEA FINAL<br>SUBMISSION DEADLINE</h1>
+    <div class="dashboard">
+        <h1>GCSE NEA FINAL SUBMISSION</h1>
 
-        <div class="section-label">THE JOURNEY SO FAR</div>
-        <div class="counter-grid">
-            <div class="card">
-                <span class="number" id="e-days">00</span>
-                <span class="label">Days In</span>
+        <div class="counters-container">
+            <div class="section-box">
+                <div class="section-title">Journey Progress Since June 2025</div>
+                <div class="counter-grid">
+                    <div class="unit"><span class="number" id="e-days">0</span><span class="label">Days In</span></div>
+                    <div class="unit"><span class="number" id="e-hours">00</span><span class="label">Hrs</span></div>
+                    <div class="unit"><span class="number" id="e-mins">00</span><span class="label">Mins</span></div>
+                    <div class="unit"><span class="number" id="e-secs">00</span><span class="label">Secs</span></div>
+                </div>
             </div>
-            <div class="card">
-                <span class="number" id="e-hours">00</span>
-                <span class="label">Hours</span>
-            </div>
-            <div class="card">
-                <span class="number" id="e-mins">00</span>
-                <span class="label">Mins</span>
-            </div>
-            <div class="card">
-                <span class="number" id="e-secs">00</span>
-                <span class="label">Secs</span>
+
+            <div class="section-box" style="background: white;">
+                <div class="section-title">Final Countdown Remaining</div>
+                <div class="counter-grid">
+                    <div class="unit"><span class="number" id="r-days">0</span><span class="label">Days Left</span></div>
+                    <div class="unit"><span class="number" id="r-hours">00</span><span class="label">Hrs</span></div>
+                    <div class="unit"><span class="number" id="r-mins">00</span><span class="label">Mins</span></div>
+                    <div class="unit"><span class="number" id="r-secs">00</span><span class="label">Secs</span></div>
+                </div>
             </div>
         </div>
 
-        <div class="section-label">TIME REMAINING</div>
-        <div class="counter-grid">
-            <div class="card" style="background: white;">
-                <span class="number" id="r-days">00</span>
-                <span class="label">Days Left</span>
-            </div>
-            <div class="card" style="background: white;">
-                <span class="number" id="r-hours">00</span>
-                <span class="label">Hours</span>
-            </div>
-            <div class="card" style="background: white;">
-                <span class="number" id="r-mins">00</span>
-                <span class="label">Mins</span>
-            </div>
-            <div class="card" style="background: white;">
-                <span class="number" id="r-secs">00</span>
-                <span class="label">Secs</span>
-            </div>
-        </div>
-
-        <div class="info-box">
+        <div class="study-box">
             <div>
-                <div class="badge">Optional Support</div>
-                <div class="info-header">Study Sessions</div>
-                <ul class="info-dates">
-                    <li><span>24 January</span> <span>09:30 – 11:00</span></li>
-                    <li><span>31 January</span> <span>09:30 – 11:00</span></li>
-                    <li><span>21 February</span> <span>09:30 – 11:00</span></li>
-                    <li><span>28 February</span> <span>09:30 – 11:00</span></li>
-                </ul>
+                <div class="study-title">Study Sessions (09:30 – 11:00)</div>
+                <div class="dates-grid">
+                    <div class="date-item">24 JAN</div>
+                    <div class="date-item">31 JAN</div>
+                    <div class="date-item">21 FEB</div>
+                    <div class="date-item">28 FEB</div>
+                </div>
             </div>
-            <div class="info-details">
-                <div class="badge">Requirements</div>
-                <p style="font-size: 1.1rem; line-height: 1.6;">
-                    <strong>Dress Code:</strong> Home clothes allowed. <br>
-                    <span style="opacity: 0.8; font-size: 0.9rem;">(Strictly no shorts or inappropriate wear).</span>
-                </p>
-                <p style="font-size: 1.1rem; margin-top: 2rem;">
-                    Want to attend? <br>
-                    <a href="mailto:mrwebb@school.com" class="email-link">Email Mr Webb</a> to reserve your desk.
-                </p>
+            
+            <div class="requirements">
+                <strong>Home clothes</strong> (no shorts).<br>
+                Email <strong>Mr Webb</strong> to attend.
             </div>
         </div>
 
         <div class="quote-container">
-            <span class="quote-text">CHASE EXCELLENCE. MAKE EVERY SECOND COUNT.</span>
-            <div class="quote-highlight"></div>
+            <span class="quote-text">CHASE EXCELLENCE. MAKE EVERY SECOND COUNT.
+                <div class="quote-highlight"></div>
+            </span>
         </div>
     </div>
 
     <script>
-        const startDate = new Date("June 2, 2025 09:00:00").getTime();
-        const targetDate = new Date("March 4, 2026 17:00:00").getTime();
+        const start = new Date("June 2, 2025 09:00:00").getTime();
+        const end = new Date("March 4, 2026 17:00:00").getTime();
 
-        function update() {
+        function tick() {
             const now = new Date().getTime();
 
             // Elapsed
-            const eDiff = now - startDate;
-            document.getElementById("e-days").innerText = Math.floor(eDiff / 86400000);
-            document.getElementById("e-hours").innerText = Math.floor((eDiff % 86400000) / 3600000).toString().padStart(2,'0');
-            document.getElementById("e-mins").innerText = Math.floor((eDiff % 3600000) / 60000).toString().padStart(2,'0');
-            document.getElementById("e-secs").innerText = Math.floor((eDiff % 60000) / 1000).toString().padStart(2,'0');
+            const el = now - start;
+            document.getElementById("e-days").innerText = Math.floor(el / 86400000);
+            document.getElementById("e-hours").innerText = Math.floor((el % 86400000) / 3600000).toString().padStart(2,'0');
+            document.getElementById("e-mins").innerText = Math.floor((el % 3600000) / 60000).toString().padStart(2,'0');
+            document.getElementById("e-secs").innerText = Math.floor((el % 60000) / 1000).toString().padStart(2,'0');
 
             // Remaining
-            const rDiff = targetDate - now;
-            if (rDiff > 0) {
-                document.getElementById("r-days").innerText = Math.floor(rDiff / 86400000);
-                document.getElementById("r-hours").innerText = Math.floor((rDiff % 86400000) / 3600000).toString().padStart(2,'0');
-                document.getElementById("r-mins").innerText = Math.floor((rDiff % 3600000) / 60000).toString().padStart(2,'0');
-                document.getElementById("r-secs").innerText = Math.floor((rDiff % 60000) / 1000).toString().padStart(2,'0');
+            const re = end - now;
+            if (re > 0) {
+                document.getElementById("r-days").innerText = Math.floor(re / 86400000);
+                document.getElementById("r-hours").innerText = Math.floor((re % 86400000) / 3600000).toString().padStart(2,'0');
+                document.getElementById("r-mins").innerText = Math.floor((re % 3600000) / 60000).toString().padStart(2,'0');
+                document.getElementById("r-secs").innerText = Math.floor((re % 60000) / 1000).toString().padStart(2,'0');
             }
         }
-
-        setInterval(update, 1000);
-        update();
+        setInterval(tick, 1000);
+        tick();
     </script>
 </body>
 </html>
