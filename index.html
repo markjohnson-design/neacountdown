@@ -36,6 +36,7 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            cursor: pointer; /* Suggests the user needs to click */
         }
 
         .container {
@@ -180,14 +181,20 @@
             opacity: 0.8;
         }
 
-        #wake-lock-status {
+        /* Audio Control Hint */
+        #audio-hint {
             position: fixed;
-            bottom: 10px;
-            right: 15px;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            opacity: 0.4;
-            letter-spacing: 1px;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            background: var(--deep-green);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            opacity: 0.8;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
         }
 
         @media (max-width: 700px) {
@@ -198,7 +205,9 @@
         }
     </style>
 </head>
-<body>
+<body onclick="playMusic()">
+
+    <div id="audio-hint">Click anywhere to start the soundtrack</div>
 
     <div class="container">
         <h1>GCSE NEA FINAL SUBMISSION</h1>
@@ -249,34 +258,40 @@
         </div>
     </div>
 
-    <div id="wake-lock-status">Wake Lock: Inactive</div>
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundboard.com/handler/Downloadaudio.ashx?id=612643" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <script>
         const start = new Date("June 2, 2025 09:00:00").getTime();
-        const end = new Date("March 25, 2026 17:00:00").getTime();
+        const end = new Date("March 4, 2026 17:00:00").getTime();
 
-        // Chromebook Always-On Logic
+        // Music Logic
+        function playMusic() {
+            const music = document.getElementById("bgMusic");
+            const hint = document.getElementById("audio-hint");
+            music.play();
+            hint.style.opacity = "0"; // Hide the hint after clicking
+            // Remove the onclick event after the first click to keep it clean
+            document.body.onclick = null;
+        }
+
+        // Wake Lock Logic
         let wakeLock = null;
-
         const requestWakeLock = async () => {
             try {
                 if ('wakeLock' in navigator) {
                     wakeLock = await navigator.wakeLock.request('screen');
-                    document.getElementById('wake-lock-status').innerText = "Wake Lock: Enabled";
                 }
-            } catch (err) {
-                document.getElementById('wake-lock-status').innerText = "Wake Lock: System Denied";
-            }
+            } catch (err) {}
         };
-
-        document.addEventListener('visibilitychange', async () => {
-            if (wakeLock !== null && document.visibilityState === 'visible') {
-                requestWakeLock();
-            }
+        document.addEventListener('visibilitychange', () => {
+            if (wakeLock !== null && document.visibilityState === 'visible') requestWakeLock();
         });
-
         requestWakeLock();
 
+        // Countdown Logic
         function update() {
             const now = new Date().getTime();
 
@@ -305,7 +320,6 @@
                     speed = "1.2s";
                     document.getElementById("pulse-status").innerText = "THE FINAL STRETCH";
                 }
-                
                 document.documentElement.style.setProperty('--pulse-duration', speed);
             }
         }
