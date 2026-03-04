@@ -188,9 +188,9 @@
         <source src="https://ia800501.us.archive.org/15/items/EuropeTheFinalCountdown_201601/Europe%20-%20The%20Final%20Countdown.mp3" type="audio/mpeg">
     </audio>
 
-    <script>
+   <script>
         const start = new Date("June 2, 2025 09:00:00").getTime();
-        const end = new Date("March 25, 2026 17:00:00").getTime();
+        const end = new Date("March 4, 2026 17:00:00").getTime();
         
         // Music Controls
         const music = document.getElementById("bgMusic");
@@ -200,11 +200,22 @@
         
         music.volume = 0.5;
 
+        // Aggressive Mac Audio Loader
         function startMusic() {
-            music.play();
-            startBtn.style.display = "none";
-            muteBtn.style.display = "block";
-            volumeSlider.style.display = "block";
+            startBtn.innerText = "LOADING...";
+            music.load(); // Force the browser to fetch the file
+            
+            music.play().then(() => {
+                // Success!
+                startBtn.style.display = "none";
+                muteBtn.style.display = "block";
+                volumeSlider.style.display = "block";
+            }).catch((error) => {
+                // Safari blocked it!
+                startBtn.innerText = "START MUSIC";
+                alert("Mac Security Blocked the Audio! \n\nBecause you are opening this locally, Apple is blocking the external music stream. \n\nTo fix this: Download the MP3, name it 'countdown.mp3', put it in the same folder as this file, and update the <source src='...'> tag.");
+                console.error("Audio Play Error:", error);
+            });
         }
 
         function toggleMute() {
